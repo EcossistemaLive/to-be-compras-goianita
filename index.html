@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TO-BE: Processo de Compras | Casas Goianita | Live Consultoria</title>
+
+    <!-- Importação de Fontes (Guia de Estilo Live V2) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* --- Núcleo da Identidade Visual (Brand Core) - Guia de Estilo V2 --- */
+        :root {
+            /* Paleta Principal */
+            --primary-bg: #06192a;     /* Azul Petróleo - Fundo principal */
+            --card-bg: #0A243D;        /* Azul Escuro - Fundo de cards */
+            --accent-color: #00e800;   /* Verde Vibrante - Destaques, links, titulos */
+            
+            /* Textos */
+            --text-primary: #ffffff;   /* Branco - Textos principais */
+            --text-muted: #cccccc;     /* Cinza Claro */
+            --text-subtle: #a0a0a0;     /* Cinza - Textos secundários e parágrafos */
+            
+            /* Bordas e Efeitos */
+            --border-color: rgba(255, 255, 255, 0.1);
+            --accent-glow: 0 0 8px rgba(0, 232, 0, 0.7); /* Sombra para o verde vibrante */
+
+            /* Tipografia */
+            --font-primary: 'Poppins', sans-serif;
+            --font-secondary: 'Merriweather', serif; /* Apenas para diagnósticos */
+            
+            /* Tamanhos de Fonte (Mobile-First) */
+            --font-size-base: 1.1rem;
+            --font-size-h3: 1.5rem;
+            --font-size-h2: clamp(2rem, 4vw, 2.5rem);
+            --font-size-h1: clamp(2.5rem, 5vw, 3rem);
+
+            /* Escala de Espaçamento */
+            --space-sm: 1rem; /* 16px */
+            --space-md: 2rem; /* 32px */
+            --space-lg: 4rem; /* 64px */
+        }
+        /* --- Fim dos Tokens --- */
+
+        /* --- Reset Básico e Estilo do Body --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-primary);
+            background-color: var(--primary-bg); /* Fallback */
+            color: var(--text-subtle);
+            line-height: 1.7;
+            
+            /* Textura de Fundo (Obrigatória) */
+            background-image: url('https://www.transparenttextures.com/patterns/cubes.png');
+            background-attachment: fixed;
+        }
+
+        /* --- Layout --- */
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: var(--space-md) 0;
+        }
+
+        @media (min-width: 768px) {
+            .container {
+                padding: var(--space-lg) 0;
+            }
+        }
+
+        /* --- Cabeçalho (Fixo) --- */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: var(--space-sm) 5%;
+            background-color: rgba(6, 25, 42, 0.8); /* --primary-bg com alfa */
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-color);
+            z-index: 100;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header-logo {
+            height: 48px; /* 12 * 4 */
+            width: auto;
+        }
+        
+        main {
+            padding-top: 100px; /* Espaço para o header fixo */
+        }
+
+        /* --- Rodapé --- */
+        footer {
+            padding: var(--space-md) 5%;
+            text-align: center;
+            background-color: #000; /* Rodapé preto sólido */
+            border-top: 1px solid var(--border-color);
+        }
+
+        .footer-logo {
+            height: 96px; /* --space-xl */
+            width: auto;
+            margin-bottom: var(--space-sm);
+        }
+        
+        /* --- Tipografia --- */
+        h1, h2, h3 {
+            font-family: var(--font-primary);
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: var(--space-sm);
+            line-height: 1.3;
+        }
+
+        h1 {
+            font-size: var(--font-size-h1);
+            color: var(--accent-color);
+            text-shadow: var(--accent-glow);
+        }
+
+        h2 {
+            font-size: var(--font-size-h2);
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 0.5rem;
+            display: inline-block;
+        }
+
+        h3 {
+            font-size: var(--font-size-h3);
+            color: var(--text-muted);
+            margin-top: var(--space-md);
+        }
+        
+        p {
+            margin-bottom: var(--space-sm);
+        }
+        
+        strong {
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        /* --- Componente: Card --- */
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: var(--space-md);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .card:focus-visible {
+            outline: 3px solid var(--accent-color);
+            outline-offset: 4px;
+        }
+
+        /* --- Componente: Tabela Responsiva --- */
+        .table-wrapper {
+            overflow-x: auto;
+            width: 100%;
+            margin-top: var(--space-md);
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 600px; /* Garante que a tabela tenha largura mínima */
+        }
+
+        th, td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+            vertical-align: top;
+        }
+
+        thead {
+            background-color: rgba(0, 232, 0, 0.1); /* Fundo verde sutil */
+        }
+
+        th {
+            color: var(--accent-color);
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+        }
+        
+        tbody tr:last-child td {
+            border-bottom: none;
+        }
+        
+        td:first-child {
+            font-weight: 600;
+            color: var(--text-muted);
+        }
+
+        /* --- Componente: Botão --- */
+        .btn {
+            display: inline-block;
+            background-color: var(--accent-color);
+            color: var(--primary-bg);
+            font-family: var(--font-primary);
+            font-size: 1rem;
+            font-weight: 700;
+            text-decoration: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: var(--space-md);
+        }
+
+        .btn:hover, .btn:focus-visible {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 20px rgba(0, 232, 0, 0.4);
+            outline: none;
+        }
+
+        /* --- Animação (Conforme Guia de Estilo) --- */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .fade-in {
+            opacity: 0; /* Começa invisível */
+        }
+        
+        /* Classe adicionada via JS quando o elemento está visível */
+        .fade-in.is-visible {
+            animation: fadeIn 0.8s ease-out forwards;
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- Cabeçalho Fixo (Guia de Estilo - Proposta) -->
+    <header>
+        <div class="header-content">
+            <img src="https://raw.githubusercontent.com/Clebito2/layout/main/Logo%20live%20oficial-36.png" 
+                 alt="Logo Live Consultoria" class="header-logo" loading="lazy">
+            <span style="color: var(--text-subtle);">Projeto Casas Goianita</span>
+        </div>
+    </header>
+
+    <!-- Conteúdo Principal -->
+    <main>
+
+        <!-- Seção Hero -->
+        <section class="container fade-in" style="padding-top: var(--space-lg); text-align: center;">
+            <h1>Modelo Padronizado (TO-BE)</h1>
+            <p style="font-size: 1.25rem; color: var(--text-muted);">Processo de Compras de Varejo</p>
+        </section>
+
+        <!-- Seção Objetivo Geral -->
+        <section class="container fade-in">
+            <div class="card">
+                <h2>Objetivo Geral do Processo</h2>
+                <p>Transformar o departamento de Compras de um centro de custo reativo para uma função estratégica e preditiva, garantindo o nível ótimo de estoque (sem rupturas e sem excessos) através da integração de dados, automação e padronização (5S).</p>
+            </div>
+        </section>
+
+        <!-- Fase 1: Identificação da Necessidade -->
+        <section class="container fade-in">
+            <div class="card">
+                <h2>Fase 1: Identificação da Necessidade (Data-Driven)</h2>
+                <p><strong>Objetivo:</strong> Mover de compras reativas (baseadas em "feeling") para um modelo proativo e preditivo, garantido por dados do sistema.</p>
+                <p><strong>Gargalo (AS-IS) Eliminado:</strong> Ruptura de estoque por falta de aviso, dependência de avisos verbais e anotações manuais (caderno).</p>
+                
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Etapa</th>
+                                <th>Processo Chave (TO-BE)</th>
+                                <th>Descrição da Ação Ideal</th>
+                                <th>Tecnologia Essencial</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1.1</td>
+                                <td>Gestão Preditiva de Estoque</td>
+                                <td>O ERP deve, obrigatoriamente, calcular e gerenciar o Estoque Mínimo (Regulador) com base no histórico de vendas (Curva ABC) e no lead time (prazo de entrega) do fornecedor.</td>
+                                <td>ERP, Módulo de BI</td>
+                            </tr>
+                            <tr>
+                                <td>1.2</td>
+                                <td>Alerta Automático</td>
+                                <td>O sistema deve gerar alertas automáticos (ou sugestões de compra) para o comprador e gerência quando o estoque atingir o nível mínimo.</td>
+                                <td>ERP (Workflow)</td>
+                            </tr>
+                            <tr>
+                                <td>1.3</td>
+                                <td>Análise Estratégica</td>
+                                <td>O comprador utiliza relatórios automatizados de Curva ABC (por faturamento e giro) para focar a análise nos itens de maior impacto (Itens A).</td>
+                                <td>ERP (Relatórios)</td>
+                            </tr>
+                            <tr>
+                                <td>1.4</td>
+                                <td>Requisição Digital</td>
+                                <td>O processo de Requisição de Compra é 100% digital via módulo no ERP, substituindo o caderno. Isso garante rastreabilidade e centralização.</td>
+                                <td>ERP (Módulo de Requisição)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <button class="btn" onclick="alert('Funcionalidade de exportação a ser implementada.')">Exportar para as Planilhas</button>
+            </div>
+        </section>
+
+        <!-- Fase 2: Cotação e Geração de Pedido -->
+        <section class="container fade-in">
+            <div class="card">
+                <h2>Fase 2: Cotação e Geração de Pedido (Controle e Padronização)</h2>
+                <p><strong>Objetivo:</strong> Garantir o melhor custo-benefício (não apenas preço), padronizar a formação de preço de venda e automatizar a criação formal de pedidos.</p>
+                <p><strong>Gargalo (AS-IS) Eliminado:</strong> Processo de cotação lento e não registrado; erros manuais no cálculo de custos e preço de venda (markup).</p>
+
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Etapa</th>
+                                <th>Processo Chave (TO-BE)</th>
+                                <th>Descrição da Ação Ideal</th>
+                                <th>Tecnologia Essencial</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>2.1</td>
+                                <td>Cotação Otimizada</td>
+                                <td>O sistema deve permitir anexar cotações (PDFs, e-mails) à requisição e, idealmente, comparar automaticamente os orçamentos. A decisão deve focar em custo-benefício (qualidade, prazo, sazonalidade), não só preço.</td>
+                                <td>ERP (Módulo de Cotação)</td>
+                            </tr>
+                            <tr>
+                                <td>2.2</td>
+                                <td>Geração Automatizada de Pedido</td>
+                                <td>Ao aprovar a cotação, o sistema gera o Pedido de Compra (PO) interno automaticamente.</td>
+                                <td>ERP (Módulo de Compras)</td>
+                            </tr>
+                            <tr>
+                                <td>2.3</td>
+                                <td>"Rodagem" de Custos (Seiketsu)</td>
+                                <td>O processo de "rodagem" (cálculo de IPI, Custo Interno, aplicação do markup/índice de venda) deve ser totalmente automatizado pelo sistema no momento da geração do PO.</td>
+                                <td>ERP (Config. Financeira/Fiscal)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <button class="btn" onclick="alert('Funcionalidade de exportação a ser implementada.')">Exportar para as Planilhas</button>
+            </div>
+        </section>
+
+        <!-- Fase 3: Recebimento e Entrada de Mercadoria -->
+        <section class="container fade-in">
+            <div class="card">
+                <h2>Fase 3: Recebimento e Entrada de Mercadoria (Fluxo P2P Eficiente)</h2>
+                <p><strong>Objetivo:</strong> Eliminar o "Delay de Estoque" (tempo entre a chegada física e a disponibilidade para venda) através da digitalização total da conferência e entrada.</p>
+                <p><strong>Gargalo (AS-IS) Eliminado:</strong> Conferência manual em papel; digitação de NFe; re-conferência manual do comprador; produto fisicamente no estoque, mas "invisível" no sistema.</p>
+
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Etapa</th>
+                                <th>Processo Chave (TO-BE)</th>
+                                <th>Descrição da Ação Ideal</th>
+                                <th>Tecnologia Essencial</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>3.1</td>
+                                <td>Recebimento Digital (XML)</td>
+                                <td>O Estoquista/Gestor exige o XML da NFe do fornecedor. O sistema usa a "Importação de XML" para pré-carregar o pedido, eliminando digitação manual de custos e impostos. O sistema calcula o Custo Unitário Final.</td>
+                                <td>ERP (Importador de NFe/XML)</td>
+                            </tr>
+                            <tr>
+                                <td>3.2</td>
+                                <td>Conferência Cega Digital (Seisou)</td>
+                                <td>A conferência física é feita com Coletor de Dados (leitor de código de barras), que compara o físico com o XML (Conferência Cega), registrando avarias digitalmente.</td>
+                                <td>Coletor de Dados (WMS ou Módulo de Estoque)</td>
+                            </tr>
+                            <tr>
+                                <td>3.3</td>
+                                <td>Endereçamento (Seiton)</td>
+                                <td>Durante a conferência, o sistema obriga o estoquista a escanear o código da prateleira/localização onde o produto será guardado (Rastreabilidade e Ordenação).</td>
+                                <td>Coletor de Dados + ERP/WMS</td>
+                            </tr>
+                            <tr>
+                                <td>3.4</td>
+                                <td>Validação e Liberação Automática</td>
+                                <td>Após a conferência digital no Coletor, o sistema valida a NFe e a libera automaticamente para: 1) Setor Financeiro (Contas a Pagar) e 2) Venda (Produto disponível no PDV).</td>
+                                <td>ERP (Integração Total)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <button class="btn" onclick="alert('Funcionalidade de exportação a ser implementada.')">Exportar para as Planilhas</button>
+            </div>
+        </section>
+        
+        <!-- Fase 4: Gestão e Monitoramento Contínuo -->
+        <section class="container fade-in">
+            <div class="card">
+                <h2>Fase 4: Gestão e Monitoramento Contínuo (Shitsuke)</h2>
+                <p><strong>Objetivo:</strong> Assegurar que o processo ideal seja mantido (Disciplina/Shitsuke) e monitorar a saúde operacional do estoque para melhoria contínua (Kaizen).</p>
+                <p><strong>Gargalo (AS-IS) Eliminado:</strong> Falta de visibilidade sobre a eficiência do estoque; processo de transferência entre lojas manual, lento e baseado em telefonemas.</p>
+
+                <h3>4.1. Otimização do Fluxo de Transferência</h3>
+                <ul>
+                    <li><strong>Inventário Multi-Loja Confiável:</strong> O ERP deve garantir um inventário em tempo real e 100% confiável, visível por todas as filiais.</li>
+                    <li><strong>Ordem de Transferência Digital:</strong> O vendedor (ou sistema) gera um "Pedido de Separação para Transferência" digital, que entra na fila de picking da outra loja, eliminando a necessidade de ligações telefônicas.</li>
+                </ul>
+
+                <h3>4.2. Monitoramento de Desempenho (KPIs Essenciais)</h3>
+                <p>O processo só é gerenciável se for medido. O ERP deve fornecer os seguintes indicadores em dashboards claros:</p>
+                
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Indicador (KPI)</th>
+                                <th>O que Mede</th>
+                                <th>Objetivo de Análise</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Giro de Estoque</td>
+                                <td>Velocidade com que o estoque é vendido e reposto.</td>
+                                <td>Aumentar. (Alta velocidade = eficiência financeira).</td>
+                            </tr>
+                            <tr>
+                                <td>Estoque Médio</td>
+                                <td>Volume médio (R$ ou Qtd) em estoque em um período.</td>
+                                <td>Otimizar. (Dados objetivos para o comprador).</td>
+                            </tr>
+                            <tr>
+                                <td>Estoque Ideal</td>
+                                <td>Quantidade exata para atender a demanda sem rupturas.</td>
+                                <td>Atingir o equilíbrio (rentabilidade máx., custo mín.).</td>
+                            </tr>
+                            <tr>
+                                <td>Taxa de Backorders</td>
+                                <td>Pedidos pendentes por falta de produto (ruptura).</td>
+                                <td>Reduzir a zero. (Indica falha na previsão).</td>
+                            </tr>
+                            <tr>
+                                <td>Sell-Through Rate (STR)</td>
+                                <td>% de estoque vendido vs. recebido em um período.</td>
+                                <td>Monitorar. (Detecta tendências de demanda).</td>
+                            </tr>
+                            <tr>
+                                <td>Contração de Estoque</td>
+                                <td>Diferença entre estoque sistêmico e físico.</td>
+                                <td>Reduzir. (Indica falhas operacionais, perdas, furtos).</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <button class="btn" onclick="alert('Funcionalidade de exportação a ser implementada.')">Exportar para as Planilhas</button>
+            </div>
+        </section>
+
+        <!-- Conclusão -->
+        <section class="container fade-in">
+            <div class="card">
+                <h2>Conclusão do Modelo: A Melhoria Contínua (Kaizen)</h2>
+                <p>Este modelo TO-BE, uma vez implementado, torna-se o novo estado atual (AS-IS). A tecnologia (ERP, WMS, BI) é a ferramenta que habilita o processo, mas o sucesso depende da disciplina (Shitsuke) em seguir o padrão e do desejo de melhoria contínua (Kaizen) para encontrar novas otimizações.</p>
+                <p>Com este modelo, o departamento de Compras deixa de "apagar incêndios" e passa a gerenciar o estoque de forma inteligente, garantindo o equilíbrio entre disponibilidade de produto e saúde financeira.</p>
+            </div>
+        </section>
+    </main>
+
+    <!-- Rodapé (Guia de Estilo - Proposta) -->
+    <footer>
+        <img src="https://raw.githubusercontent.com/Clebito2/layout/main/Logo%20live%20oficial-34.png" 
+             alt="Logo Live Consultoria" class="footer-logo" loading="lazy">
+        <p style="color: var(--text-primary); font-weight: 600;">Live Consultoria Empresarial</p>
+        <p style="color: var(--text-subtle); font-size: 0.9rem;">Reestruturação Estratégica | Projeto Casas Goianita</p>
+    </footer>
+
+    <!-- Script para Animação (Obrigatório pelo Guia de Estilo V2) -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Seleciona todos os elementos que devem ter a animação
+            const targets = document.querySelectorAll('.fade-in');
+
+            // Configura o IntersectionObserver
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    // Se o elemento está visível
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        // Opcional: parar de observar depois que a animação rodou
+                        // observer.unobserve(entry.target); 
+                    }
+                });
+            }, {
+                threshold: 0.1 // Ativa quando 10% do elemento está visível
+            });
+
+            // Observa cada elemento
+            targets.forEach(target => {
+                observer.observe(target);
+            });
+            
+            // Fallback para caso o JS de 'alert' não seja permitido
+            const buttons = document.querySelectorAll('.btn');
+            buttons.forEach(button => {
+                button.onclick = (e) => {
+                    console.log("Exportar para as Planilhas (simulado).");
+                    // Previne que um 'alert' bloqueie a execução
+                    if (typeof alert === 'function') {
+                        alert('Funcionalidade de exportação a ser implementada.');
+                    }
+                };
+            });
+        });
+    </script>
+
+</body>
+</html>
